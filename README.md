@@ -1,9 +1,8 @@
-Aquí tienes el archivo `README.md` con **todos los pasos detallados**, desde clonar el proyecto hasta ejecutarlo:
-
-```markdown
 # Sistema Web - Contraloría General de la República del Perú
 
 Este es un proyecto web diseñado para la **Contraloría General de la República del Perú**. El sistema permite gestionar procesos administrativos, reportes y colaboraciones dentro de la institución.
+
+---
 
 ## Tecnologías utilizadas
 
@@ -28,6 +27,7 @@ Sigue los pasos a continuación para configurar el proyecto localmente.
 Abre tu terminal y ejecuta el siguiente comando:
 ```bash
 git clone https://github.com/walter-garay/contraloria.git
+
 ```
 
 ### **2. Entrar al directorio del proyecto**
