@@ -2,23 +2,22 @@
 
 namespace Database\Factories;
 
-use App\Models\Evaluacion;
+use App\Models\Involucrado;
 use App\Models\Denuncia;
-use App\Models\Auditor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class EvaluacionFactory extends Factory
+class InvolucradoFactory extends Factory
 {
-    protected $model = Evaluacion::class;
+    protected $model = Involucrado::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
-            'denuncia_id' => Denuncia::factory(),  // Crea una denuncia asociada
-            'auditor_id' => Auditor::factory(), // Crea un auditor asociado
-            'observaciones' => $this->faker->paragraph, // Observaciones aleatorias
-            'resultado' => $this->faker->randomElement(['Desestimado', 'Pasa a Control']), // Resultado aleatorio
-            'fecha_evaluacion' => $this->faker->dateTimeThisYear, // Fecha de evaluación aleatoria
+            'denuncia_id' => Denuncia::factory(), // Asociar a una denuncia existente
+            'nombre' => $this->faker->name, // Nombre ficticio
+            'cargo' => $this->faker->jobTitle, // Cargo ficticio
+            'entidad' => $this->faker->company, // Entidad ficticia
+            'dni_ruc' => $this->faker->randomNumber(8, true), // DNI o RUC ficticio
         ];
     }
 }

@@ -39,7 +39,7 @@ class Denuncia extends Model
      */
     public function pruebas()
     {
-        return $this->hasMany(related: Prueba::class, 'denuncia_id');
+        return $this->hasMany(Prueba::class, 'denuncia_id');
     }
 
     /**

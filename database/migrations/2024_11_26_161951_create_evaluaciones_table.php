@@ -11,7 +11,7 @@ class CreateEvaluacionesTable extends Migration
         Schema::create('evaluaciones', function (Blueprint $table) {
             $table->bigIncrements('id'); // Clave primaria
             $table->unsignedBigInteger('denuncia_id'); // Clave foránea a Denuncias
-            $table->unsignedBigInteger('auditor_id');  // Clave foránea a Auditores
+            $table->unsignedBigInteger('user_id');  // Clave foránea a Auditores
             $table->text('observaciones');
             $table->enum('resultado', ['Desestimado', 'Pasa a Control']);
             $table->timestamp('fecha_evaluacion');
@@ -19,7 +19,7 @@ class CreateEvaluacionesTable extends Migration
 
             // Definir las claves foráneas
             $table->foreign('denuncia_id')->references('id')->on('denuncias')->onDelete('cascade');
-            $table->foreign('auditor_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
