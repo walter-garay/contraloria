@@ -75,6 +75,10 @@ Crea las tablas necesarias en la base de datos ejecutando:
 ```bash
 php artisan migrate --seed
 ```
+Si ya tienes la bd creada debes refrescarla
+```bash
+php artisan migrate:fresh --seed
+```
 
 ### **10. Iniciar el servidor de desarrollo**
 Ejecuta el siguiente comando para compilar los assets y levantar el servidor:
