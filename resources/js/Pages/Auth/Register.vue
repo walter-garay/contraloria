@@ -27,6 +27,7 @@ const submit = () => {
             <AuthenticationCardLogo />
         </template>
 
+        <!-- Título -->
         <div class="text-center mb-3">
             <h1 class="block text-2xl font-bold text-udh_3 dark:text-gray-100">Registrarse</h1>
             <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
@@ -50,10 +51,12 @@ const submit = () => {
                     placeholder="Ingrese su nombre"
                     autofocus
                     autocomplete="name"
+                    :aria-describedby="form.errors.name ? 'name-error' : undefined"
                 />
                 <Alert
                     v-if="form.errors.name"
                     class="mt-2"
+                    id="name-error"
                     type="error"
                     show-icon
                     :message="form.errors.name"
@@ -71,10 +74,12 @@ const submit = () => {
                     required
                     placeholder="Ingrese su correo electrónico"
                     autocomplete="username"
+                    :aria-describedby="form.errors.email ? 'email-error' : undefined"
                 />
                 <Alert
                     v-if="form.errors.email"
                     class="mt-2"
+                    id="email-error"
                     type="error"
                     show-icon
                     :message="form.errors.email"
@@ -90,10 +95,12 @@ const submit = () => {
                     required
                     placeholder="Ingrese su contraseña"
                     autocomplete="new-password"
+                    :aria-describedby="form.errors.password ? 'password-error' : undefined"
                 />
                 <Alert
                     v-if="form.errors.password"
                     class="mt-2"
+                    id="password-error"
                     type="error"
                     show-icon
                     :message="form.errors.password"
@@ -109,10 +116,12 @@ const submit = () => {
                     required
                     placeholder="Confirme su contraseña"
                     autocomplete="new-password"
+                    :aria-describedby="form.errors.password_confirmation ? 'password_confirmation-error' : undefined"
                 />
                 <Alert
                     v-if="form.errors.password_confirmation"
                     class="mt-2"
+                    id="password_confirmation-error"
                     type="error"
                     show-icon
                     :message="form.errors.password_confirmation"

@@ -27,7 +27,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Reset Password" />
+    <Head title="Restablecer Contraseña" />
 
     <AuthenticationCard>
         <template #logo>
@@ -35,8 +35,9 @@ const submit = () => {
         </template>
 
         <form @submit.prevent="submit">
+            <!-- Campo de Email -->
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="email" value="Correo Electrónico" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -49,8 +50,9 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
+            <!-- Campo de Contraseña -->
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Nueva Contraseña" />
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -62,8 +64,9 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
+            <!-- Campo de Confirmación de Contraseña -->
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel for="password_confirmation" value="Confirmar Contraseña" />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
@@ -75,9 +78,10 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
             </div>
 
+            <!-- Botón de Restablecer -->
             <div class="flex items-center justify-end mt-4">
                 <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Reset Password
+                    Restablecer Contraseña
                 </PrimaryButton>
             </div>
         </form>
