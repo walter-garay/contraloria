@@ -9,9 +9,6 @@ import { ExperimentOutlined, AppstoreOutlined, TeamOutlined, SolutionOutlined, U
 
 import { Dropdown, MenuDivider, MenuItem, Menu  } from 'ant-design-vue';
 
-// Obtener el rol del usuario
-const user = $page.props.user; // Asegúrate de que el rol esté disponible
-
 const showingNavigationDropdown = ref(false);
 
 const switchToTeam = (team) => {
@@ -27,11 +24,10 @@ const logout = () => {
 };
 
 const navigationLinks = [
-    // Si el usuario tiene rol "Ciudadano", solo mostrar "Denuncias"
-    ...(user.rol === 'Ciudadano' ? [{ name: 'Denuncias', route: 'denuncias.index', icon: AppstoreOutlined }] : []),
-    { name: 'Dashboard', route: 'dashboard.index', icon: AppstoreOutlined },  // Ruta para el Dashboard
-    { name: 'Evaluaciones', route: 'evaluaciones.index', icon: SolutionOutlined },
-    { name: 'Usuarios', route: 'usuarios.index', icon: TeamOutlined },  // Para otros roles si es necesario
+    { name: 'Dashboard', route: 'dashboard.index', icon: TeamOutlined },
+    { name: 'Denuncias', route: 'denuncias.index', icon: AppstoreOutlined },
+    { name: 'Evaluaciones', route: 'usuarios.index', icon: SolutionOutlined },
+    { name: 'Usuarios', route: 'usuarios.index', icon: TeamOutlined },
 ];
 </script>
 
@@ -40,7 +36,7 @@ const navigationLinks = [
         <aside class="w-64 bg-white dark:bg-gray-800 h-screen flex-col border-r border-gray-200 dark:border-gray-600 hidden sm:flex">
             <!-- Logo y Título -->
             <div class="flex items-center px-4 h-[73.5px] border-b border-gray-200 dark:border-gray-600 py-4">
-                <Link :href="route('dashboard')" class="flex items-center space-x-4">
+                <Link :href="route('dashboard.index')" class="flex items-center space-x-4">
                     <ApplicationMark class="w-12 rounded-md" />
                     <div class="flex flex-col">
                         <h1 class="text-xs font-bold text-red-800 mb-0 dark:text-red-600">Gobierno del Perú</h1>
@@ -92,6 +88,9 @@ const navigationLinks = [
                     </Dropdown>
                 </div>
             </div>
+
+
+
 
             <!-- Opciones del usuario en la parte inferior -->
             <div class="px-4 py-4 border-t border-gray-200 dark:border-gray-600">
@@ -148,3 +147,8 @@ const navigationLinks = [
         </div>
     </div>
 </template>
+
+
+
+
+
