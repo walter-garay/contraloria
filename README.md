@@ -6,7 +6,7 @@ Este es un proyecto web diseñado para la **Contraloría General de la Repúblic
 
 ## Tecnologías utilizadas
 
-- **PHP 8.x**: Lenguaje de backend.
+- **PHP >=8.2**: Lenguaje de backend.
 - **Laravel 11**: Framework para el desarrollo backend.
 - **Jetstream con Inertia.js**: Manejo de autenticación y funcionalidades avanzadas.
 - **Vue.js 3**: Framework de frontend.
@@ -34,12 +34,6 @@ git clone https://github.com/walter-garay/contraloria.git
 Navega al directorio del proyecto:
 ```bash
 cd contraloria
-```
-
-### **3. Inicializar un repositorio Git (si no está inicializado)**
-Si Git no está inicializado en tu copia local, inicialízalo:
-```bash
-git init
 ```
 
 ### **4. Instalar las dependencias de PHP**
@@ -76,13 +70,14 @@ Genera una clave única para la aplicación:
 php artisan key:generate
 ```
 
-### **8. Crear la base de datos**
-Crea manualmente una base de datos llamada `contraloria` en tu servidor MySQL utilizando herramientas como phpMyAdmin o MySQL Workbench.
-
 ### **9. Ejecutar las migraciones**
 Crea las tablas necesarias en la base de datos ejecutando:
 ```bash
-php artisan migrate
+php artisan migrate --seed
+```
+Si ya tienes la bd creada solo debes refrescarla
+```bash
+php artisan migrate:fresh --seed
 ```
 
 ### **10. Iniciar el servidor de desarrollo**
@@ -142,10 +137,14 @@ Si deseas contribuir al proyecto:
 
 ---
 
-## Licencia
-
-Este proyecto es de uso exclusivo de la **Contraloría General de la República del Perú**.
-
+### 1. Clonar el repositorio
+Actualizar tu rama local con los cambios de una rama remota
+```bash
+git pull origin <NOMBRE_DE_LA_RAMA_REMOTA>
+---
+Subir tus cambios a tu rama remota
+```bash
+git push origin <NOMBRE_DE_TU_RAMA_REMOTA>
 ---
 
 ## Contacto
