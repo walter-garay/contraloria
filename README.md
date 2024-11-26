@@ -66,8 +66,8 @@ npm install
    DB_HOST=127.0.0.1
    DB_PORT=3306
    DB_DATABASE=contraloria
-   DB_USERNAME=tu_usuario
-   DB_PASSWORD=tu_contraseña
+   DB_USERNAME=root
+   DB_PASSWORD=
    ```
 
 ### **7. Generar la clave de la aplicación**
