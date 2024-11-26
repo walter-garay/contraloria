@@ -1,25 +1,73 @@
 <template>
     <Modal
-        title="Editar Usuario"
+        title="Editar Denuncia"
         :open="visible"
         @cancel="cerrarModal"
         centered
         :footer="null"
     >
-        <Form layout="vertical" @finish="enviarFormulario" :model="usuario">
-            <!-- Nombre -->
-            <FormItem label="Nombre" name="name" :rules="[{ required: true, message: 'Por favor ingrese el nombre' }]">
-                <Input v-model:value="usuario.name" placeholder="Ingrese el nombre completo" />
+        <Form layout="vertical" @finish="enviarFormulario" :model="denuncia">
+            <!-- Entidad -->
+            <FormItem
+                label="Entidad"
+                name="entidad"
+                :rules="[{ required: true, message: 'Por favor ingrese la entidad' }]"
+            >
+                <Input
+                    v-model:value="denuncia.entidad"
+                    placeholder="Ingrese el nombre de la entidad"
+                />
             </FormItem>
 
-            <!-- Email -->
-            <FormItem label="Correo Electrónico" name="email" :rules="[{ type: 'email', message: 'Por favor ingrese un correo válido' }]">
-                <Input v-model:value="usuario.email" placeholder="Ingrese el correo electrónico" />
+            <!-- Lugar -->
+            <FormItem
+                label="Lugar"
+                name="lugar"
+                :rules="[{ required: true, message: 'Por favor ingrese el lugar' }]"
+            >
+                <Input v-model:value="denuncia.lugar" placeholder="Ingrese el lugar" />
             </FormItem>
 
-            <!-- Contraseña -->
-            <FormItem label="Contraseña" name="password">
-                <Input.Password v-model:value="usuario.password" placeholder="Ingrese una nueva contraseña (opcional)" />
+            <!-- Descripción -->
+            <FormItem
+                label="Descripción"
+                name="descripcion"
+                :rules="[{ required: true, message: 'Por favor ingrese la descripción' }]"
+            >
+                <Input.TextArea
+                    v-model:value="denuncia.descripcion"
+                    placeholder="Ingrese la descripción de la denuncia"
+                    rows="4"
+                />
+            </FormItem>
+
+            <!-- Fecha Probable -->
+            <FormItem
+                label="Fecha Probable"
+                name="fecha_probable"
+                :rules="[{ required: true, message: 'Por favor seleccione la fecha probable' }]"
+            >
+                <Input
+                    v-model:value="denuncia.fecha_probable"
+                    type="date"
+                />
+            </FormItem>
+
+            <!-- Prioridad -->
+            <FormItem label="Prioridad" name="prioridad">
+                <Input
+                    v-model:value="denuncia.prioridad"
+                    type="number"
+                    placeholder="Ingrese la prioridad (opcional)"
+                />
+            </FormItem>
+
+            <!-- Estado -->
+            <FormItem label="Estado" name="estado">
+                <Input
+                    v-model:value="denuncia.estado"
+                    placeholder="Ingrese el estado de la denuncia"
+                />
             </FormItem>
 
             <!-- Botones de Acción -->
@@ -32,54 +80,63 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits } from 'vue';
-import { Modal, Form, FormItem, Input, Button, message } from 'ant-design-vue';
-import axios from 'axios';
+import { ref, watch, defineProps, defineEmits } from "vue";
+import { Modal, Form, FormItem, Input, Button, message } from "ant-design-vue";
+import axios from "axios";
 
 const props = defineProps({
     visible: Boolean,
-    usuario: {
+    denuncia: {
         type: Object,
         default: () => ({
             id: null,
-            name: '',
-            email: '',
-            password: '',
+            entidad: "",
+            lugar: "",
+            descripcion: "",
+            fecha_probable: "",
+            prioridad: null,
+            estado: "En proceso",
         }),
     },
 });
 
-const emitir = defineEmits(['update:visible', 'actualizar-tabla']);
+const emitir = defineEmits(["update:visible", "actualizar-tabla"]);
 
-const usuario = ref({ ...props.usuario });
+const denuncia = ref({ ...props.denuncia });
 const cargando = ref(false);
 
 // Cierra el modal y emite el evento para cerrar en el componente padre
 const cerrarModal = () => {
-    emitir('update:visible', false);
+    emitir("update:visible", false);
 };
 
-// Envía el formulario de edición del usuario
+// Envía el formulario de edición de la denuncia
 const enviarFormulario = async () => {
     cargando.value = true;
     try {
-        // Enviar la solicitud para actualizar el usuario
-        const response = await axios.put(route('usuarios.update', usuario.value.id), usuario.value);
-        message.success('Usuario actualizado exitosamente');
+        // Enviar la solicitud para actualizar la denuncia
+        const response = await axios.put(
+            route("denuncias.update", denuncia.value.id),
+            denuncia.value
+        );
+        message.success("Denuncia actualizada exitosamente");
         cerrarModal();
-        emitir('actualizar-tabla', response.data["usuario"]);
+        emitir("actualizar-tabla", response.data["denuncia"]);
     } catch (error) {
-        message.error('Error al actualizar el usuario');
-        console.error('Error al guardar el usuario:', error);
+        message.error("Error al actualizar la denuncia");
+        console.error("Error al guardar la denuncia:", error);
     } finally {
         cargando.value = false;
     }
 };
 
-// Verificar si el modal se abre y cargar los valores del usuario
-watch(() => props.visible, (val) => {
-    if (val) {
-        usuario.value = { ...props.usuario };
+// Verificar si el modal se abre y cargar los valores de la denuncia
+watch(
+    () => props.visible,
+    (val) => {
+        if (val) {
+            denuncia.value = { ...props.denuncia };
+        }
     }
-});
+);
 </script>

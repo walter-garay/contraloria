@@ -1,10 +1,8 @@
 <template>
-    <AppLayout title="Usuarios">
+    <AppLayout title="Denuncias">
         <template #header>
-            <h2
-                class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-0"
-            >
-                Usuarios
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-0">
+                Denuncias
             </h2>
         </template>
 
@@ -14,7 +12,7 @@
             >
                 <InputSearch
                     v-model:value="valorBuscar"
-                    placeholder="Buscar usuario por nombre o email"
+                    placeholder="Buscar denuncia por entidad o lugar"
                     class="w-full"
                     size="large"
                 />
@@ -44,29 +42,29 @@
                         size="large"
                         class="font-medium"
                     >
-                        Agregar usuario
+                        Agregar Denuncia
                     </Button>
                 </div>
             </div>
 
-            <!-- Tabla de usuarios -->
-            <TablaUsuarios
-                :usuarios="usuariosFiltrados"
+            <!-- Tabla de denuncias -->
+            <TablaDenuncias
+                :denuncias="denunciasFiltradas"
                 @editar="abrirModalEditar"
                 @actualizar-tabla="actualizarTabla"
             />
 
-            <!-- Modal para agregar usuario -->
+            <!-- Modal para agregar denuncia -->
             <ModalAgregar
                 v-model:visible="mostrarModalCrear"
                 @actualizar-tabla="actualizarTabla"
             />
 
-            <!-- Modal para editar usuario -->
+            <!-- Modal para editar denuncia -->
             <ModalEditar
-                v-if="usuarioSeleccionado"
+                v-if="denunciaSeleccionada"
                 v-model:visible="mostrarModalEditar"
-                :usuario="usuarioSeleccionado"
+                :denuncia="denunciaSeleccionada"
                 @actualizar-tabla="actualizarTabla"
             />
         </div>
@@ -78,27 +76,27 @@ import { ref, computed } from "vue";
 import { usePage, router } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Button, InputSearch, Upload, message } from "ant-design-vue";
-import TablaUsuarios from "./Partes/TablaUsuarios.vue";
+import TablaDenuncias from "./Partes/TablaDenuncias.vue";
 import ModalAgregar from "./Partes/ModalAgregar.vue";
 import ModalEditar from "./Partes/ModalEditar.vue";
 
 const { props } = usePage();
-const usuarios = ref(props.usuarios || []); // Cambiar a usuarios
+const denuncias = ref(props.denuncias || []); // Cambiar a denuncias
 const mostrarModalCrear = ref(false);
 const mostrarModalEditar = ref(false);
-const usuarioSeleccionado = ref(null);
+const denunciaSeleccionada = ref(null);
 const valorBuscar = ref("");
 
-// Filtrar usuarios por nombre o email
-const usuariosFiltrados = computed(() =>
+// Filtrar denuncias por entidad o lugar
+const denunciasFiltradas = computed(() =>
     !valorBuscar.value
-        ? usuarios.value
-        : usuarios.value.filter(
-            (usuario) =>
-                usuario.name
+        ? denuncias.value
+        : denuncias.value.filter(
+            (denuncia) =>
+                denuncia.entidad
                     .toLowerCase()
                     .includes(valorBuscar.value.toLowerCase()) ||
-                usuario.email
+                denuncia.lugar
                     .toLowerCase()
                     .includes(valorBuscar.value.toLowerCase())
         )
@@ -106,24 +104,24 @@ const usuariosFiltrados = computed(() =>
 
 // Actualizar la tabla (recargar datos)
 const actualizarTabla = () => {
-    router.visit(route("usuarios.index"), { preserveScroll: true });
+    router.visit(route("denuncias.index"), { preserveScroll: true });
 };
 
-// Abrir modal para agregar usuario
+// Abrir modal para agregar denuncia
 const abrirModalCrear = () => {
     mostrarModalCrear.value = true;
 };
 
-// Abrir modal para editar usuario
-const abrirModalEditar = (usuario) => {
+// Abrir modal para editar denuncia
+const abrirModalEditar = (denuncia) => {
     mostrarModalEditar.value = true;
-    usuarioSeleccionado.value = { ...usuario };
+    denunciaSeleccionada.value = { ...denuncia };
 };
 
 // Función para exportar los datos en CSV
 const exportarCSV = async () => {
     try {
-        const response = await axios.get(route("usuarios.export"), {
+        const response = await axios.get(route("denuncias.export"), {
             responseType: "blob",
         });
 
@@ -131,7 +129,7 @@ const exportarCSV = async () => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", "usuarios.csv");
+        link.setAttribute("download", "denuncias.csv");
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -167,7 +165,7 @@ const importarCSV = async () => {
 
             try {
                 // Enviar el archivo al servidor mediante Axios
-                const response = await axios.post(route("usuarios.import"), formData, {
+                const response = await axios.post(route("denuncias.import"), formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
 
@@ -193,5 +191,4 @@ const importarCSV = async () => {
         }
     });
 };
-
 </script>
