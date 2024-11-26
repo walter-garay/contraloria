@@ -62,13 +62,13 @@ const submit = () => {
         <form @submit.prevent="submit">
             <!-- Email -->
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Email</label>
+                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Correo Electrónico</label>
                 <Input
                     id="email"
                     v-model:value="form.email"
                     type="email"
                     class="mt-1 block w-full dark:bg-gray-800 dark:text-gray-100"
-                    placeholder="Ingrese su email"
+                    placeholder="Ingrese su correo electrónico"
                     required
                     autofocus
                 />
@@ -80,9 +80,9 @@ const submit = () => {
             <!-- Contraseña -->
             <div class="mt-4">
                 <div class="flex justify-between items-center">
-                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Password</label>
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Contraseña</label>
                     <Link :href="route('password.request')" class="text-sm text-udh_1 font-semibold decoration-2 hover:underline">
-                        ¿Olvidó su contraseña?
+                        ¿Olvidaste tu contraseña?
                     </Link>
                 </div>
                 <InputPassword

@@ -137,10 +137,14 @@ Si deseas contribuir al proyecto:
 
 ---
 
-## Licencia
-
-Este proyecto es de uso exclusivo de la **Contraloría General de la República del Perú**.
-
+### 1. Clonar el repositorio
+Actualizar tu rama local con los cambios de una rama remota
+```bash
+git pull origin <NOMBRE_DE_LA_RAMA_REMOTA>
+---
+Subir tus cambios a tu rama remota
+```bash
+git push origin <NOMBRE_DE_TU_RAMA_REMOTA>
 ---
 
 ## Contacto
