@@ -3,39 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Denuncia;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
-use App\Imports\DenunciasImport;
-use App\Exports\DenunciasExport;
-use Illuminate\Support\Facades\Auth;
 
 class DenunciaController extends Controller
 {
+    // Reglas de validación separadas
     private $rules = [
         'store' => [
+            'user_id' => 'required|exists:users,id',
             'entidad' => 'required|max:255',
             'lugar' => 'required|max:255',
             'descripcion' => 'required',
             'fecha_probable' => 'required|date',
             'prioridad' => 'nullable|integer',
             'tipo_de_hecho' => 'nullable|max:255',
-            'monto_economico' => 'nullable|numeric',
-            'otros_colaboradores' => 'nullable|max:255',
+            'monto_economico' => 'nullable|numeric|min:0',
+            'otros_colaboradores' => 'nullable',
             'sigue_ocurriendo' => 'nullable|boolean',
             'estado' => 'required|in:En proceso,Admitido,No admitido,Derivado a OCI',
         ],
         'update' => [
+            'user_id' => 'required|exists:users,id',
             'entidad' => 'required|max:255',
             'lugar' => 'required|max:255',
             'descripcion' => 'required',
             'fecha_probable' => 'required|date',
             'prioridad' => 'nullable|integer',
             'tipo_de_hecho' => 'nullable|max:255',
-            'monto_economico' => 'nullable|numeric',
-            'otros_colaboradores' => 'nullable|max:255',
+            'monto_economico' => 'nullable|numeric|min:0',
+            'otros_colaboradores' => 'nullable',
             'sigue_ocurriendo' => 'nullable|boolean',
             'estado' => 'required|in:En proceso,Admitido,No admitido,Derivado a OCI',
         ],
@@ -44,8 +43,9 @@ class DenunciaController extends Controller
     // Listar denuncias
     public function index()
     {
-        $denuncias = Denuncia::with('usuario') // Trae la relación con el usuario
-            ->orderBy('created_at', 'desc')
+        $denuncias = Denuncia::with('usuario:id,name')
+            ->select('id', 'user_id', 'entidad', 'lugar', 'descripcion', 'fecha_probable', 'prioridad', 'tipo_de_hecho', 'monto_economico', 'sigue_ocurriendo', 'estado', 'updated_at')
+            ->orderBy('id', 'desc')
             ->get();
 
         return Inertia::render('Denuncias/Index', [
@@ -58,50 +58,19 @@ class DenunciaController extends Controller
     {
         $request->validate($this->rules['store']);
 
-        $denuncia = Denuncia::create([
-            'user_id' => Auth::id(), // Asumimos que el usuario está autenticado
-            'entidad' => $request->entidad,
-            'lugar' => $request->lugar,
-            'descripcion' => $request->descripcion,
-            'fecha_probable' => $request->fecha_probable,
-            'prioridad' => $request->prioridad,
-            'tipo_de_hecho' => $request->tipo_de_hecho,
-            'monto_economico' => $request->monto_economico,
-            'otros_colaboradores' => $request->otros_colaboradores,
-            'sigue_ocurriendo' => $request->sigue_ocurriendo,
-            'estado' => $request->estado,
-        ]);
+        Denuncia::create($request->all());
 
-        return response()->json([
-            'message' => 'Denuncia creada con éxito',
-            'denuncia' => $denuncia
-        ]);
+        return response()->json(['success' => true, 'message' => 'Denuncia registrada exitosamente.']);
     }
 
     // Actualizar una denuncia
     public function update(Request $request, Denuncia $denuncia)
     {
-        $rules = $this->rules['update'];
+        $request->validate($this->rules['update']);
 
-        $request->validate($rules);
+        $denuncia->update($request->all());
 
-        $denuncia->update([
-            'entidad' => $request->entidad,
-            'lugar' => $request->lugar,
-            'descripcion' => $request->descripcion,
-            'fecha_probable' => $request->fecha_probable,
-            'prioridad' => $request->prioridad,
-            'tipo_de_hecho' => $request->tipo_de_hecho,
-            'monto_economico' => $request->monto_economico,
-            'otros_colaboradores' => $request->otros_colaboradores,
-            'sigue_ocurriendo' => $request->sigue_ocurriendo,
-            'estado' => $request->estado,
-        ]);
-
-        return response()->json([
-            'message' => 'Denuncia actualizada con éxito',
-            'denuncia' => $denuncia
-        ]);
+        return response()->json(['success' => true, 'message' => 'Denuncia actualizada exitosamente.']);
     }
 
     // Eliminar una denuncia
@@ -109,29 +78,32 @@ class DenunciaController extends Controller
     {
         $denuncia->delete();
 
-        return response()->json(['message' => 'Denuncia eliminada con éxito']);
+        return response()->json(['success' => true, 'message' => 'Denuncia eliminada exitosamente.']);
     }
 
     // Devuelve la lista de denuncias en JSON
     public function getDenuncias()
     {
-        return Denuncia::with('usuario') // Trae la relación con el usuario
-            ->orderBy('created_at', 'desc')
+        return Denuncia::with('usuario:id,name')
+            ->select('id', 'user_id', 'entidad', 'lugar', 'descripcion', 'fecha_probable', 'prioridad', 'tipo_de_hecho', 'monto_economico', 'sigue_ocurriendo', 'estado', 'updated_at')
+            ->orderBy('id', 'desc')
             ->get();
     }
 
-    // Exportar denuncias
+    // Exportar denuncias a CSV
     public function export()
     {
-        return Excel::download(new DenunciasExport, 'denuncias.xlsx');
+        $denuncias = Denuncia::with('usuario:id,name')->get();
+        $csvExporter = new \Laracsv\Export();
+        $csvExporter->build($denuncias, ['id', 'user_id', 'entidad', 'lugar', 'descripcion', 'fecha_probable', 'prioridad', 'tipo_de_hecho', 'monto_economico', 'sigue_ocurriendo', 'estado', 'created_at', 'updated_at'])->download();
     }
 
-    // Importar denuncias
+    // Importar denuncias desde CSV
     public function import(Request $request)
     {
         try {
             $request->validate([
-                'file' => 'required|mimes:xlsx,csv',
+                'file' => 'required|mimes:csv,txt',
             ]);
 
             Excel::import(new DenunciasImport, $request->file('file'));

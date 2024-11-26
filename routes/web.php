@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,9 +24,8 @@ Route::middleware([
     'verified',
 ])->group(function () {
     // Dashboard
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
 
     // Usuarios
     Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
@@ -36,7 +36,6 @@ Route::middleware([
     Route::get('/usuarios/export', [UsuarioController::class, 'export'])->name('usuarios.export');
     Route::post('/usuarios/import', [UsuarioController::class, 'import'])->name('usuarios.import');
 
-    // Denuncias
     // Denuncias
     Route::get('/denuncias', [DenunciaController::class, 'index'])->name('denuncias.index');
     Route::get('/denuncias/json', [DenunciaController::class, 'getDenuncias'])->name('denuncias.json');

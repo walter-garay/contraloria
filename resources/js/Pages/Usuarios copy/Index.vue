@@ -1,8 +1,10 @@
 <template>
-    <AppLayout title="Denuncias">
+    <AppLayout title="Usuarios">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-0">
-                Denuncias
+            <h2
+                class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-0"
+            >
+                Usuarios
             </h2>
         </template>
 
@@ -12,59 +14,59 @@
             >
                 <InputSearch
                     v-model:value="valorBuscar"
-                    placeholder="Buscar denuncia por entidad o lugar"
+                    placeholder="Buscar usuario por nombre o email"
                     class="w-full"
                     size="large"
                 />
 
-                <div class="flex gap-4">
-                    <Button
-                        type="default"
-                        @click="exportarCSV"
-                        size="large"
-                        class="font-medium"
-                    >
-                        Exportar CSV
-                    </Button>
-
-                    <Button
-                        type="default"
-                        @click="importarCSV"
-                        size="large"
-                        class="font-medium"
-                    >
-                        Importar CSV
-                    </Button>
-
+                <div class="flex gap-2">
                     <Button
                         type="primary"
                         @click="abrirModalCrear"
                         size="large"
                         class="font-medium"
                     >
-                        Agregar Denuncia
+                        Agregar usuario
+                    </Button>
+
+                    <Button
+                        type="default"
+                        @click="exportarCSV"
+                        size="large"
+                        class="font"
+                    >
+                        Exportar
+                    </Button>
+
+                    <Button
+                        type="default"
+                        @click="importarCSV"
+                        size="large"
+                        class="font"
+                    >
+                        Importar
                     </Button>
                 </div>
             </div>
 
-            <!-- Tabla de denuncias -->
-            <TablaDenuncias
-                :denuncias="denunciasFiltradas"
+            <!-- Tabla de usuarios -->
+            <TablaUsuarios
+                :usuarios="usuariosFiltrados"
                 @editar="abrirModalEditar"
                 @actualizar-tabla="actualizarTabla"
             />
 
-            <!-- Modal para agregar denuncia -->
+            <!-- Modal para agregar usuario -->
             <ModalAgregar
                 v-model:visible="mostrarModalCrear"
                 @actualizar-tabla="actualizarTabla"
             />
 
-            <!-- Modal para editar denuncia -->
+            <!-- Modal para editar usuario -->
             <ModalEditar
-                v-if="denunciaSeleccionada"
+                v-if="usuarioSeleccionado"
                 v-model:visible="mostrarModalEditar"
-                :denuncia="denunciaSeleccionada"
+                :usuario="usuarioSeleccionado"
                 @actualizar-tabla="actualizarTabla"
             />
         </div>
@@ -76,27 +78,27 @@ import { ref, computed } from "vue";
 import { usePage, router } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Button, InputSearch, Upload, message } from "ant-design-vue";
-import TablaDenuncias from "./Partes/TablaDenuncias.vue";
+import TablaUsuarios from "./Partes/TablaUsuarios.vue";
 import ModalAgregar from "./Partes/ModalAgregar.vue";
 import ModalEditar from "./Partes/ModalEditar.vue";
 
 const { props } = usePage();
-const denuncias = ref(props.denuncias || []); // Cambiar a denuncias
+const usuarios = ref(props.usuarios || []); // Cambiar a usuarios
 const mostrarModalCrear = ref(false);
 const mostrarModalEditar = ref(false);
-const denunciaSeleccionada = ref(null);
+const usuarioSeleccionado = ref(null);
 const valorBuscar = ref("");
 
-// Filtrar denuncias por entidad o lugar
-const denunciasFiltradas = computed(() =>
+// Filtrar usuarios por nombre o email
+const usuariosFiltrados = computed(() =>
     !valorBuscar.value
-        ? denuncias.value
-        : denuncias.value.filter(
-            (denuncia) =>
-                denuncia.entidad
+        ? usuarios.value
+        : usuarios.value.filter(
+            (usuario) =>
+                usuario.name
                     .toLowerCase()
                     .includes(valorBuscar.value.toLowerCase()) ||
-                denuncia.lugar
+                usuario.email
                     .toLowerCase()
                     .includes(valorBuscar.value.toLowerCase())
         )
@@ -104,24 +106,24 @@ const denunciasFiltradas = computed(() =>
 
 // Actualizar la tabla (recargar datos)
 const actualizarTabla = () => {
-    router.visit(route("denuncias.index"), { preserveScroll: true });
+    router.visit(route("usuarios.index"), { preserveScroll: true });
 };
 
-// Abrir modal para agregar denuncia
+// Abrir modal para agregar usuario
 const abrirModalCrear = () => {
     mostrarModalCrear.value = true;
 };
 
-// Abrir modal para editar denuncia
-const abrirModalEditar = (denuncia) => {
+// Abrir modal para editar usuario
+const abrirModalEditar = (usuario) => {
     mostrarModalEditar.value = true;
-    denunciaSeleccionada.value = { ...denuncia };
+    usuarioSeleccionado.value = { ...usuario };
 };
 
 // Función para exportar los datos en CSV
 const exportarCSV = async () => {
     try {
-        const response = await axios.get(route("denuncias.export"), {
+        const response = await axios.get(route("usuarios.export"), {
             responseType: "blob",
         });
 
@@ -129,7 +131,7 @@ const exportarCSV = async () => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", "denuncias.csv");
+        link.setAttribute("download", "usuarios.csv");
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -165,7 +167,7 @@ const importarCSV = async () => {
 
             try {
                 // Enviar el archivo al servidor mediante Axios
-                const response = await axios.post(route("denuncias.import"), formData, {
+                const response = await axios.post(route("usuarios.import"), formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
 
@@ -191,4 +193,5 @@ const importarCSV = async () => {
         }
     });
 };
+
 </script>
