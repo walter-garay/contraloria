@@ -4,7 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\OpenAIController;
+use App\Http\Controllers\DenunciaController;
 
 
 Route::get('/', function () {
@@ -35,5 +35,15 @@ Route::middleware([
     Route::delete('/usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
     Route::get('/usuarios/export', [UsuarioController::class, 'export'])->name('usuarios.export');
     Route::post('/usuarios/import', [UsuarioController::class, 'import'])->name('usuarios.import');
+
+    // Denuncias
+    // Denuncias
+    Route::get('/denuncias', [DenunciaController::class, 'index'])->name('denuncias.index');
+    Route::get('/denuncias/json', [DenunciaController::class, 'getDenuncias'])->name('denuncias.json');
+    Route::post('/denuncias', [DenunciaController::class, 'store'])->name('denuncias.store');
+    Route::put('/denuncias/{denuncia}', [DenunciaController::class, 'update'])->name('denuncias.update');
+    Route::delete('/denuncias/{denuncia}', [DenunciaController::class, 'destroy'])->name('denuncias.destroy');
+    Route::get('/denuncias/export', [DenunciaController::class, 'export'])->name('denuncias.export');
+    Route::post('/denuncias/import', [DenunciaController::class, 'import'])->name('denuncias.import');
 
 });

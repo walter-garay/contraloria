@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Denuncia;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
 use App\Imports\DenunciasImport;
 use App\Exports\DenunciasExport;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Inertia\Inertia;
 
 class DenunciaController extends Controller
 {
-    // Reglas de validación para almacenar y actualizar
     private $rules = [
         'store' => [
             'entidad' => 'required|max:255',
@@ -41,10 +41,10 @@ class DenunciaController extends Controller
         ],
     ];
 
-    // Listar todas las denuncias
+    // Listar denuncias
     public function index()
     {
-        $denuncias = Denuncia::with('usuario') // Cargar la relación con el usuario que creó la denuncia
+        $denuncias = Denuncia::with('usuario') // Trae la relación con el usuario
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -53,15 +53,13 @@ class DenunciaController extends Controller
         ]);
     }
 
-    // Crear una nueva denuncia
+    // Crear una denuncia
     public function store(Request $request)
     {
-        // Validación de datos
         $request->validate($this->rules['store']);
 
-        // Crear una nueva denuncia en la base de datos
         $denuncia = Denuncia::create([
-            'user_id' => Auth::id(), // Usuario autenticado
+            'user_id' => Auth::id(), // Asumimos que el usuario está autenticado
             'entidad' => $request->entidad,
             'lugar' => $request->lugar,
             'descripcion' => $request->descripcion,
@@ -80,13 +78,13 @@ class DenunciaController extends Controller
         ]);
     }
 
-    // Actualizar una denuncia existente
+    // Actualizar una denuncia
     public function update(Request $request, Denuncia $denuncia)
     {
-        // Validación de datos
-        $request->validate($this->rules['update']);
+        $rules = $this->rules['update'];
 
-        // Actualizar la denuncia
+        $request->validate($rules);
+
         $denuncia->update([
             'entidad' => $request->entidad,
             'lugar' => $request->lugar,
@@ -109,36 +107,33 @@ class DenunciaController extends Controller
     // Eliminar una denuncia
     public function destroy(Denuncia $denuncia)
     {
-        // Eliminar la denuncia
         $denuncia->delete();
 
         return response()->json(['message' => 'Denuncia eliminada con éxito']);
     }
 
-    // Obtener las denuncias en formato JSON
+    // Devuelve la lista de denuncias en JSON
     public function getDenuncias()
     {
-        return Denuncia::with('usuario') // Cargar la relación con el usuario
+        return Denuncia::with('usuario') // Trae la relación con el usuario
             ->orderBy('created_at', 'desc')
             ->get();
     }
 
-    // Exportar denuncias a Excel o CSV
+    // Exportar denuncias
     public function export()
     {
         return Excel::download(new DenunciasExport, 'denuncias.xlsx');
     }
 
-    // Importar denuncias desde un archivo
+    // Importar denuncias
     public function import(Request $request)
     {
         try {
-            // Validación de archivo
             $request->validate([
                 'file' => 'required|mimes:xlsx,csv',
             ]);
 
-            // Importar las denuncias desde el archivo
             Excel::import(new DenunciasImport, $request->file('file'));
 
             return response()->json(['success' => true, 'message' => 'Denuncias importadas correctamente.']);
