@@ -69,4 +69,9 @@ class User extends Authenticatable
             'is_active' => 'boolean',  // Cast para is_active
         ];
     }
+
+    public function notificaciones()
+    {
+    return $this->hasMany(Notificacion::class); // Relación de uno a muchos
+    }
 }
