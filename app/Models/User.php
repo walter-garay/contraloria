@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,8 +13,6 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens;
-
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use HasProfilePhoto;
     use HasTeams;
@@ -31,6 +28,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'rol',          // Nuevo campo
+        'is_active',    // Nuevo campo
+        'celular',      // Nuevo campo
+        'dni',          // Nuevo campo
+        'cargo',        // Nuevo campo
     ];
 
     /**
@@ -64,6 +66,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',  // Cast para is_active
         ];
     }
 

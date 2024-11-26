@@ -20,6 +20,12 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            // Nuevos campos
+            $table->enum('rol', ['Ciudadano', 'Auditor', 'Administrador']); // Campo 'rol' ENUM
+            $table->boolean('is_active')->default(true); // Campo 'is_active' BOOLEAN, predeterminado a true
+            $table->string('celular')->nullable(); // Campo 'celular' VARCHAR, NULLABLE
+            $table->string('dni')->nullable(); // Campo 'dni' VARCHAR, NULLABLE
+            $table->string('cargo')->nullable(); // Campo 'cargo' VARCHAR, NULLABLE
             $table->timestamps();
         });
 
