@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Hash;
 
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
+
 class UsuarioController extends Controller
 {
     // Reglas de validación separadas
@@ -76,4 +80,29 @@ class UsuarioController extends Controller
             ->orderBy('name')
             ->get();
     }
+
+    public function export()
+    {
+        $usuarios = User::all();
+        $csvExporter = new \Laracsv\Export();
+        $csvExporter->build($usuarios, ['name', 'email', 'created_at'])->download();
+    }
+
+    public function import(Request $request)
+{
+    try {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt',
+        ]);
+
+        Excel::import(new UsersImport, $request->file('file'));
+
+        return response()->json(['success' => true, 'message' => 'Usuarios importados correctamente.']);
+    } catch (\Exception $e) {
+        Log::error('Error al importar usuarios: ' . $e->getMessage());
+        return response()->json(['success' => false, 'message' => 'Error al importar usuarios.'], 500);
+    }
+}
+
+
 }

@@ -29,5 +29,7 @@ Route::middleware([
     Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
     Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update'])->name('usuarios.update');
     Route::delete('/usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
+    Route::get('/usuarios/export', [UsuarioController::class, 'export'])->name('usuarios.export');
+    Route::post('/usuarios/import', [UsuarioController::class, 'import'])->name('usuarios.import');
 
 });

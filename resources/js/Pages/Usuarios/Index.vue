@@ -19,13 +19,34 @@
                     size="large"
                 />
 
-                <Button
-                    type="primary"
-                    @click="abrirModalCrear"
-                    size="large"
-                    class="font-medium"
-                    >Agregar usuario</Button
-                >
+                <div class="flex gap-4">
+                    <Button
+                        type="default"
+                        @click="exportarCSV"
+                        size="large"
+                        class="font-medium"
+                    >
+                        Exportar CSV
+                    </Button>
+
+                    <Button
+                        type="default"
+                        @click="importarCSV"
+                        size="large"
+                        class="font-medium"
+                    >
+                        Importar CSV
+                    </Button>
+
+                    <Button
+                        type="primary"
+                        @click="abrirModalCrear"
+                        size="large"
+                        class="font-medium"
+                    >
+                        Agregar usuario
+                    </Button>
+                </div>
             </div>
 
             <!-- Tabla de usuarios -->
@@ -56,7 +77,7 @@
 import { ref, computed } from "vue";
 import { usePage, router } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { Button, InputSearch } from "ant-design-vue";
+import { Button, InputSearch, Upload, message } from "ant-design-vue";
 import TablaUsuarios from "./Partes/TablaUsuarios.vue";
 import ModalAgregar from "./Partes/ModalAgregar.vue";
 import ModalEditar from "./Partes/ModalEditar.vue";
@@ -98,4 +119,79 @@ const abrirModalEditar = (usuario) => {
     mostrarModalEditar.value = true;
     usuarioSeleccionado.value = { ...usuario };
 };
+
+// Función para exportar los datos en CSV
+const exportarCSV = async () => {
+    try {
+        const response = await axios.get(route("usuarios.export"), {
+            responseType: "blob",
+        });
+
+        // Crear un enlace para descargar el archivo
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "usuarios.csv");
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        message.success("CSV exportado correctamente.");
+    } catch (error) {
+        message.error("Error al exportar el CSV.");
+    }
+};
+
+// Función para importar datos desde un archivo CSV
+const importarCSV = async () => {
+    // Crear un elemento de entrada de tipo archivo
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".csv"; // Acepta solo archivos CSV
+    input.click();
+
+    // Escuchar el evento de cambio (cuando el usuario selecciona un archivo)
+    input.addEventListener("change", async () => {
+        const file = input.files[0];
+
+        if (file) {
+            // Validar que el archivo sea menor a un tamaño específico, por ejemplo, 2MB
+            const maxFileSize = 2 * 1024 * 1024; // 2MB
+            if (file.size > maxFileSize) {
+                message.error("El archivo es demasiado grande. Tamaño máximo: 2MB.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            try {
+                // Enviar el archivo al servidor mediante Axios
+                const response = await axios.post(route("usuarios.import"), formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+
+                if (response.data.success) {
+                    // Mensaje de éxito
+                    message.success(response.data.message || "CSV importado correctamente.");
+                    // Actualizar la tabla si es necesario
+                    if (typeof actualizarTabla === "function") {
+                        actualizarTabla();
+                    }
+                } else {
+                    // Mostrar mensaje de error si el servidor responde con fallo
+                    message.error(response.data.message || "Error al importar el archivo.");
+                }
+            } catch (error) {
+                // Manejo de errores
+                const errorMessage = error.response?.data?.message || "Error al importar el CSV.";
+                message.error(errorMessage);
+                console.error("Error al importar CSV:", error); // Para depuración
+            }
+        } else {
+            message.warning("No se seleccionó ningún archivo.");
+        }
+    });
+};
+
 </script>

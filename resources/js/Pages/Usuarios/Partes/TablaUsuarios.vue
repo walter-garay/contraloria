@@ -48,7 +48,7 @@ const columnas = [
         width: 180,
         sorter: (a, b) => new Date(a.updated_at) - new Date(b.updated_at),
     },
-    { title: "Acciones", key: "acciones", fixed: "right", width: 120 },
+    { title: "Acciones", key: "acciones", fixed: "right", width: 100 },
 ];
 
 // Emitir eventos para editar y eliminar usuarios
