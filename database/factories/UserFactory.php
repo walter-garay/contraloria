@@ -36,6 +36,13 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
+
+            // Nuevos campos
+            'rol' => fake()->randomElement(['Ciudadano', 'Auditor', 'Administrador']), // Rol aleatorio
+            'is_active' => fake()->boolean(90), // 90% de probabilidad de estar activo
+            'celular' => fake()->phoneNumber(), // Número de celular aleatorio
+            'dni' => fake()->numberBetween(10000000, 99999999), // Número de DNI aleatorio
+            'cargo' => fake()->jobTitle(), // Cargo aleatorio
         ];
     }
 
