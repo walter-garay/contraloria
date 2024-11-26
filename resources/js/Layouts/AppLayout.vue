@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import Banner from '@/Components/Banner.vue';
 import Navbar from './Navbar.vue';
+import ChatBot from '@/Components/ChatBot.vue';
 
 defineProps({
     title: String,
@@ -27,5 +28,6 @@ defineProps({
                 </main>
             </div>
         </div>
+        <ChatBot />
     </div>
 </template>

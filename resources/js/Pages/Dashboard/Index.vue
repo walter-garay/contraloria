@@ -72,11 +72,13 @@
                 </div>
             </div>
         </div>
+
     </AppLayout>
 </template>
 
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
+import ChatBot from "@/Components/ChatBot.vue";
 
 import { ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
