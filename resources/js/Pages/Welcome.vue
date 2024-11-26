@@ -24,7 +24,7 @@ defineProps({
                 <div>
                     <template v-if="$page.props.auth.user">
                         <Link
-                            href="#"
+                            href="dashboard"
                             class="rounded-md px-4 py-2 text-white bg-red-600 hover:bg-red-700 focus:ring focus:ring-red-300"
                         >
                             Ingresar
