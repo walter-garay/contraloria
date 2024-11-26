@@ -19,25 +19,7 @@
                     size="large"
                 />
 
-                <div class="flex gap-4">
-                    <Button
-                        type="default"
-                        @click="exportarCSV"
-                        size="large"
-                        class="font-medium"
-                    >
-                        Exportar CSV
-                    </Button>
-
-                    <Button
-                        type="default"
-                        @click="importarCSV"
-                        size="large"
-                        class="font-medium"
-                    >
-                        Importar CSV
-                    </Button>
-
+                <div class="flex gap-2">
                     <Button
                         type="primary"
                         @click="abrirModalCrear"
@@ -45,6 +27,24 @@
                         class="font-medium"
                     >
                         Agregar usuario
+                    </Button>
+
+                    <Button
+                        type="default"
+                        @click="exportarCSV"
+                        size="large"
+                        class="font"
+                    >
+                        Exportar
+                    </Button>
+
+                    <Button
+                        type="default"
+                        @click="importarCSV"
+                        size="large"
+                        class="font"
+                    >
+                        Importar
                     </Button>
                 </div>
             </div>
