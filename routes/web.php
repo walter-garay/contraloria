@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\OpenAIController;
 
 
 Route::get('/', function () {
