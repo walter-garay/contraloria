@@ -32,10 +32,15 @@
                 <InputNumber v-model:value="denuncia.prioridad" min="1" max="5" placeholder="Seleccione la prioridad (1 a 5)" style="width: 100%" />
             </FormItem>
 
-            <!-- Tipo de Hecho -->
-            <FormItem label="Tipo de Hecho" name="tipo_de_hecho">
-                <Input v-model:value="denuncia.tipo_de_hecho" placeholder="Ingrese el tipo de hecho" />
+                <!-- Tipo de Hecho -->
+            <FormItem label="Tipo de Hecho" name="tipo_de_hecho" :rules="[{ required: true, message: 'Por favor seleccione un tipo de hecho' }]">
+                <Select v-model:value="denuncia.tipo_de_hecho" placeholder="Seleccione un tipo de hecho">
+                    <Option v-for="opcion in opcionesTipoHecho" :key="opcion" :value="opcion">
+                        {{ opcion }}
+                    </Option>
+                </Select>
             </FormItem>
+
 
             <!-- Monto Económico -->
             <FormItem label="Monto Económico" name="monto_economico">
@@ -95,6 +100,23 @@ const denuncia = ref({
     estado: '',
 });
 
+
+// Opciones para el campo "Tipo de Hecho"
+const opcionesTipoHecho = [
+    "Sistema Nacional de Presupuesto",
+    "Sistema Nacional de Tesorería",
+    "Sistema Nacional de Endeudamiento Público",
+    "Sistema Nacional de Contabilidad",
+    "Sistema Nacional de Inversión Pública",
+    "Sistema Nacional de Planeamiento Estratégico",
+    "Sistema Nacional de Defensa Jurídica del Estado",
+    "Sistema Nacional de Control",
+    "Modernización de la Gestión del Estado",
+    "Sistema Nacional de Bienes Estatales",
+    "Sistema Nacional de Abastecimiento (Contratación de obras públicas, bienes, servicios y suministros)",
+    "Sistema de Gestión de Recursos Humanos",
+];
+
 const cargando = ref(false);
 
 // Cierra el modal y emite el evento para cerrar en el componente padre
@@ -136,4 +158,20 @@ watch(() => props.visible, (val) => {
         };
     }
 });
+
+// Array con los tipos de hechos cargados desde la imagen
+const tiposDeHechos = [
+    "Sistema Nacional de Presupuesto",
+    "Sistema Nacional de Tesorería",
+    "Sistema Nacional de Endeudamiento Público",
+    "Sistema Nacional de Contabilidad",
+    "Sistema Nacional de Inversión Pública",
+    "Sistema Nacional de Planeamiento Estratégico",
+    "Sistema Nacional de Defensa Jurídica del Estado",
+    "Sistema Nacional de Control",
+    "Modernización de la Gestión del Estado",
+    "Sistema Nacional de Bienes Estatales",
+    "Sistema Nacional de Abastecimiento (Contratación de obras públicas, bienes, servicios y suministros)",
+    "Sistema de Gestión de Recursos Humanos",
+];
 </script>
