@@ -26,8 +26,9 @@ class Evaluacion extends Model
     }
 
     // Relación con Auditor
-    public function auditor()
+    public function usuario()
     {
-        return $this->belongsTo(Auditor::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
+
 }

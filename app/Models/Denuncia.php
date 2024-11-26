@@ -39,11 +39,7 @@ class Denuncia extends Model
      */
     public function pruebas()
     {
-<<<<<<< HEAD
         return $this->hasMany(Prueba::class, 'denuncia_id');
-=======
-        return $this->hasMany(related: Prueba::class, foreignKey: 'denuncia_id');
->>>>>>> c24bcf9424b3359d585e6a6c1ddef40c45bd701d
     }
 
     /**

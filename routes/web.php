@@ -4,8 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\OpenAIController;
-
+use App\Http\Controllers\EvaluacionController; // Importar el controlador de Evaluaciones
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -15,7 +14,6 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
 
 Route::middleware([
     'auth:sanctum',
@@ -36,5 +34,12 @@ Route::middleware([
     Route::get('/usuarios/export', [UsuarioController::class, 'export'])->name('usuarios.export');
     Route::post('/usuarios/import', [UsuarioController::class, 'import'])->name('usuarios.import');
 
-   
+    // Evaluaciones
+    Route::get('/evaluaciones', [EvaluacionController::class, 'index'])->name('evaluaciones.index');
+    Route::get('/evaluaciones/json', [EvaluacionController::class, 'getEvaluaciones'])->name('evaluaciones.json');
+    Route::post('/evaluaciones', [EvaluacionController::class, 'store'])->name('evaluaciones.store');
+    Route::put('/evaluaciones/{evaluacion}', [EvaluacionController::class, 'update'])->name('evaluaciones.update');
+    Route::delete('/evaluaciones/{evaluacion}', [EvaluacionController::class, 'destroy'])->name('evaluaciones.destroy');
+    Route::get('/evaluaciones/export', [EvaluacionController::class, 'export'])->name('evaluaciones.export');
+    Route::post('/evaluaciones/import', [EvaluacionController::class, 'import'])->name('evaluaciones.import');
 });
