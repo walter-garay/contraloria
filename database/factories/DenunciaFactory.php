@@ -6,27 +6,24 @@ use App\Models\Denuncia;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Denuncia>
- */
 class DenunciaFactory extends Factory
 {
     protected $model = Denuncia::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
-            'user_id' => User::factory(), // Asociar la denuncia con un usuario aleatorio
-            'entidad' => $this->faker->company, // Nombre de la entidad
-            'lugar' => $this->faker->address, // Dirección o lugar del incidente
-            'descripcion' => $this->faker->paragraph, // Descripción del hecho
-            'fecha_probable' => $this->faker->date, // Fecha probable del hecho
-            'prioridad' => $this->faker->optional()->numberBetween(1, 5), // Prioridad (opcional)
-            'tipo_de_hecho' => $this->faker->optional()->word, // Tipo de hecho (opcional)
-            'monto_economico' => $this->faker->optional()->randomFloat(2, 1000, 10000), // Monto económico (opcional)
-            'otros_colaboradores' => $this->faker->optional()->paragraph, // Otros colaboradores (opcional)
-            'sigue_ocurriendo' => $this->faker->optional()->boolean, // Si sigue ocurriendo (opcional)
-            'estado' => $this->faker->randomElement(['En proceso', 'Admitido', 'No admitido', 'Derivado a OCI']), // Estado de la denuncia
+            'user_id' => User::factory(), // Asociar a un usuario
+            'entidad' => $this->faker->company,
+            'lugar' => $this->faker->city,
+            'descripcion' => $this->faker->paragraph,
+            'fecha_probable' => $this->faker->date,
+            'prioridad' => $this->faker->randomElement([1, 2, 3, null]),
+            'tipo_de_hecho' => $this->faker->sentence(3),
+            'monto_economico' => $this->faker->randomFloat(2, 1000, 1000000),
+            'otros_colaboradores' => $this->faker->text,
+            'sigue_ocurriendo' => $this->faker->boolean,
+            'estado' => $this->faker->randomElement(['En proceso', 'Admitido', 'No admitido', 'Derivado a OCI']),
         ];
     }
 }

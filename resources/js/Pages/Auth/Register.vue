@@ -9,6 +9,7 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    dni: '', // Agregado campo DNI
     terms: false,
 });
 
@@ -83,6 +84,30 @@ const submit = () => {
                     type="error"
                     show-icon
                     :message="form.errors.email"
+                />
+            </div>
+
+            <!-- DNI -->
+            <div>
+                <label for="dni" class="block text-sm font-medium text-gray-700 dark:text-gray-200">DNI</label>
+                <Input
+                    id="dni"
+                    v-model:value="form.dni"
+                    type="number"
+                    class="block mt-1 w-full"
+                    required
+                    placeholder="Ingrese su DNI"
+                    maxlength="8"
+                    autocomplete="off"
+                    :aria-describedby="form.errors.dni ? 'dni-error' : undefined"
+                />
+                <Alert
+                    v-if="form.errors.dni"
+                    class="mt-2"
+                    id="dni-error"
+                    type="error"
+                    show-icon
+                    :message="form.errors.dni"
                 />
             </div>
 
