@@ -1,13 +1,12 @@
-Aquí tienes el archivo `README.md` con **todos los pasos detallados**, desde clonar el proyecto hasta ejecutarlo:
-
-```markdown
 # Sistema Web - Contraloría General de la República del Perú
 
 Este es un proyecto web diseñado para la **Contraloría General de la República del Perú**. El sistema permite gestionar procesos administrativos, reportes y colaboraciones dentro de la institución.
 
+---
+
 ## Tecnologías utilizadas
 
-- **PHP 8.x**: Lenguaje de backend.
+- **PHP >=8.2**: Lenguaje de backend.
 - **Laravel 11**: Framework para el desarrollo backend.
 - **Jetstream con Inertia.js**: Manejo de autenticación y funcionalidades avanzadas.
 - **Vue.js 3**: Framework de frontend.
@@ -28,18 +27,13 @@ Sigue los pasos a continuación para configurar el proyecto localmente.
 Abre tu terminal y ejecuta el siguiente comando:
 ```bash
 git clone https://github.com/walter-garay/contraloria.git
+
 ```
 
 ### **2. Entrar al directorio del proyecto**
 Navega al directorio del proyecto:
 ```bash
 cd contraloria
-```
-
-### **3. Inicializar un repositorio Git (si no está inicializado)**
-Si Git no está inicializado en tu copia local, inicialízalo:
-```bash
-git init
 ```
 
 ### **4. Instalar las dependencias de PHP**
@@ -66,8 +60,8 @@ npm install
    DB_HOST=127.0.0.1
    DB_PORT=3306
    DB_DATABASE=contraloria
-   DB_USERNAME=tu_usuario
-   DB_PASSWORD=tu_contraseña
+   DB_USERNAME=root
+   DB_PASSWORD=
    ```
 
 ### **7. Generar la clave de la aplicación**
@@ -76,13 +70,14 @@ Genera una clave única para la aplicación:
 php artisan key:generate
 ```
 
-### **8. Crear la base de datos**
-Crea manualmente una base de datos llamada `contraloria` en tu servidor MySQL utilizando herramientas como phpMyAdmin o MySQL Workbench.
-
 ### **9. Ejecutar las migraciones**
 Crea las tablas necesarias en la base de datos ejecutando:
 ```bash
-php artisan migrate
+php artisan migrate --seed
+```
+Si ya tienes la bd creada solo debes refrescarla
+```bash
+php artisan migrate:fresh --seed
 ```
 
 ### **10. Iniciar el servidor de desarrollo**
