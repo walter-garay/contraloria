@@ -36,4 +36,5 @@ Route::middleware([
     Route::get('/usuarios/export', [UsuarioController::class, 'export'])->name('usuarios.export');
     Route::post('/usuarios/import', [UsuarioController::class, 'import'])->name('usuarios.import');
 
+   
 });
