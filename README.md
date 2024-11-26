@@ -70,13 +70,10 @@ Genera una clave única para la aplicación:
 php artisan key:generate
 ```
 
-### **8. Crear la base de datos**
-Crea manualmente una base de datos llamada `contraloria` en tu servidor MySQL utilizando herramientas como phpMyAdmin o MySQL Workbench.
-
 ### **9. Ejecutar las migraciones**
 Crea las tablas necesarias en la base de datos ejecutando:
 ```bash
-php artisan migrate
+php artisan migrate --seed
 ```
 
 ### **10. Iniciar el servidor de desarrollo**
