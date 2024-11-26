@@ -75,7 +75,7 @@ Crea las tablas necesarias en la base de datos ejecutando:
 ```bash
 php artisan migrate --seed
 ```
-Si ya tienes la bd creada debes refrescarla
+Si ya tienes la bd creada solo debes refrescarla
 ```bash
 php artisan migrate:fresh --seed
 ```
