@@ -13,7 +13,7 @@ class Evaluacion extends Model
 
     protected $fillable = [
         'denuncia_id',
-        'auditor_id',
+        'user_id',
         'observaciones',
         'resultado',
         'fecha_evaluacion',
