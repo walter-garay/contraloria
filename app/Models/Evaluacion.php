@@ -13,7 +13,7 @@ class Evaluacion extends Model
 
     protected $fillable = [
         'denuncia_id',
-        'auditor_id',
+        'user_id',
         'observaciones',
         'resultado',
         'fecha_evaluacion',
@@ -26,8 +26,9 @@ class Evaluacion extends Model
     }
 
     // Relación con Auditor
-    public function auditor()
+    public function usuario()
     {
-        return $this->belongsTo(Auditor::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
+
 }

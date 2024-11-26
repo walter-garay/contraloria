@@ -25,9 +25,11 @@ class CreateNewUser implements CreatesNewUsers
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
-            'dni' => ['required', 'string', 'size:8', 'unique:users'], // Validación para DNI
+            'dni' => ['required', 'string', 'size:8', 'unique:users'],
+            'rol' => ['nullable', 'in:Ciudadano'], // Opcional: Validar rol como Ciudadano
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
+        
 
         return DB::transaction(function () use ($input) {
             return tap(User::create([

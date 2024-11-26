@@ -56,6 +56,10 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+
+    protected $attributes = [
+        'rol' => 'Ciudadano', // Valor por defecto para el rol
+    ];
     /**
      * Get the attributes that should be cast.
      *
@@ -74,4 +78,6 @@ class User extends Authenticatable
     {
     return $this->hasMany(Notificacion::class); // Relación de uno a muchos
     }
+
+    
 }
