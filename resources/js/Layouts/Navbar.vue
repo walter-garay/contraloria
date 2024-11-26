@@ -9,6 +9,9 @@ import { ExperimentOutlined, AppstoreOutlined, TeamOutlined, SolutionOutlined, U
 
 import { Dropdown, MenuDivider, MenuItem, Menu  } from 'ant-design-vue';
 
+// Obtener el rol del usuario
+const user = $page.props.user; // Asegúrate de que el rol esté disponible
+
 const showingNavigationDropdown = ref(false);
 
 const switchToTeam = (team) => {
@@ -24,17 +27,11 @@ const logout = () => {
 };
 
 const navigationLinks = [
-    { name: 'Usuarios', route: 'usuarios.index', icon: TeamOutlined },
-    // { name: 'Recursos', route: 'dashboard', icon: AppstoreOutlined },
-    // { name: 'Usuarios', route: 'dashboard', icon: TeamOutlined },
-    // { name: 'Asistencias', route: 'dashboard', icon: SolutionOutlined },
-    // { name: 'Miembros', route: 'dashboard', icon: UsergroupAddOutlined },
-    // { name: 'Proyectos', route: 'dashboard', icon: ProjectOutlined },
-    { name: 'Denuncias', route: 'denuncias.index', icon: AppstoreOutlined },  // Aquí se agrega la ruta de denuncias
-    // { name: 'Recursos', route: 'dashboard', icon: AppstoreOutlined },
-    // { name: 'Asistencias', route: 'dashboard', icon: SolutionOutlined },
-    // { name: 'Miembros', route: 'dashboard', icon: UsergroupAddOutlined },
-    // { name: 'Proyectos', route: 'dashboard', icon: ProjectOutlined },
+    // Si el usuario tiene rol "Ciudadano", solo mostrar "Denuncias"
+    ...(user.rol === 'Ciudadano' ? [{ name: 'Denuncias', route: 'denuncias.index', icon: AppstoreOutlined }] : []),
+    { name: 'Dashboard', route: 'dashboard.index', icon: AppstoreOutlined },  // Ruta para el Dashboard
+    { name: 'Evaluaciones', route: 'evaluaciones.index', icon: SolutionOutlined },
+    { name: 'Usuarios', route: 'usuarios.index', icon: TeamOutlined },  // Para otros roles si es necesario
 ];
 </script>
 
@@ -96,9 +93,6 @@ const navigationLinks = [
                 </div>
             </div>
 
-
-
-
             <!-- Opciones del usuario en la parte inferior -->
             <div class="px-4 py-4 border-t border-gray-200 dark:border-gray-600">
                 <p class="mb-4 text-sm font-bold text-gray-700 dark:text-gray-300">
@@ -154,8 +148,3 @@ const navigationLinks = [
         </div>
     </div>
 </template>
-
-
-
-
-
