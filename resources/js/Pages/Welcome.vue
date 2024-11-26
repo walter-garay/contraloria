@@ -60,7 +60,7 @@ defineProps({
                         Nuestro sistema garantiza que todas las denuncias sean tratadas con profesionalismo, seguridad y transparencia.
                     </p>
                     <Link
-                        href="#"
+                        href="/login"
                         class="rounded-md px-6 py-3 text-white bg-red-600 hover:bg-red-700 focus:ring focus:ring-red-300"
                     >
                         Realizar denuncia
