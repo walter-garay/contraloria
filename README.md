@@ -6,7 +6,7 @@ Este es un proyecto web diseñado para la **Contraloría General de la Repúblic
 
 ## Tecnologías utilizadas
 
-- **PHP 8.x**: Lenguaje de backend.
+- **PHP >=8.2**: Lenguaje de backend.
 - **Laravel 11**: Framework para el desarrollo backend.
 - **Jetstream con Inertia.js**: Manejo de autenticación y funcionalidades avanzadas.
 - **Vue.js 3**: Framework de frontend.
@@ -34,12 +34,6 @@ git clone https://github.com/walter-garay/contraloria.git
 Navega al directorio del proyecto:
 ```bash
 cd contraloria
-```
-
-### **3. Inicializar un repositorio Git (si no está inicializado)**
-Si Git no está inicializado en tu copia local, inicialízalo:
-```bash
-git init
 ```
 
 ### **4. Instalar las dependencias de PHP**
