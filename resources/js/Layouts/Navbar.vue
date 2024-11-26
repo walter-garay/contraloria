@@ -84,7 +84,7 @@ const navigationLinks = [
                             </div>
                         </div>
                     </div>
-
+                    
                     <!-- Navigation Links -->
                     <div class="space-y-4 flex flex-col">
                         <NavLink
