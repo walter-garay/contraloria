@@ -30,6 +30,11 @@ const navigationLinks = [
     // { name: 'Asistencias', route: 'dashboard', icon: SolutionOutlined },
     // { name: 'Miembros', route: 'dashboard', icon: UsergroupAddOutlined },
     // { name: 'Proyectos', route: 'dashboard', icon: ProjectOutlined },
+    { name: 'Denuncias', route: 'denuncias.index', icon: AppstoreOutlined },  // Aquí se agrega la ruta de denuncias
+    // { name: 'Recursos', route: 'dashboard', icon: AppstoreOutlined },
+    // { name: 'Asistencias', route: 'dashboard', icon: SolutionOutlined },
+    // { name: 'Miembros', route: 'dashboard', icon: UsergroupAddOutlined },
+    // { name: 'Proyectos', route: 'dashboard', icon: ProjectOutlined },
 ];
 </script>
 
