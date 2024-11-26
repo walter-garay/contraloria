@@ -39,7 +39,7 @@ const emitir = defineEmits(["editar", "actualizar-tabla"]);
 
 // Definir las columnas de la tabla
 const columnas = [
-    { title: "ID", dataIndex: "id", key: "id", width: 50 },
+    { title: "ID", dataIndex: "id", key: "id", width: 60 },
     { title: "DNI", dataIndex: "dni", key: "dni", render: (dni) => dni || "No registrado" },
     { title: "Nombre", dataIndex: "name", key: "name", sorter: (a, b) => a.name.localeCompare(b.name) },
     { title: "Email", dataIndex: "email", key: "email" },

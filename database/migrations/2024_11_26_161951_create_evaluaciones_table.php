@@ -20,7 +20,6 @@ class CreateEvaluacionesTable extends Migration
             // Definir las claves foráneas
             $table->foreign('denuncia_id')->references('id')->on('denuncias')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
         });
     }
 

@@ -24,12 +24,10 @@ const logout = () => {
 };
 
 const navigationLinks = [
+    { name: 'Dashboard', route: 'dashboard.index', icon: TeamOutlined },
+    { name: 'Denuncias', route: 'denuncias.index', icon: AppstoreOutlined },
+    { name: 'Evaluaciones', route: 'usuarios.index', icon: SolutionOutlined },
     { name: 'Usuarios', route: 'usuarios.index', icon: TeamOutlined },
-    // { name: 'Recursos', route: 'dashboard', icon: AppstoreOutlined },
-    // { name: 'Usuarios', route: 'dashboard', icon: TeamOutlined },
-    // { name: 'Asistencias', route: 'dashboard', icon: SolutionOutlined },
-    // { name: 'Miembros', route: 'dashboard', icon: UsergroupAddOutlined },
-    // { name: 'Proyectos', route: 'dashboard', icon: ProjectOutlined },
 ];
 </script>
 
@@ -38,7 +36,7 @@ const navigationLinks = [
         <aside class="w-64 bg-white dark:bg-gray-800 h-screen flex-col border-r border-gray-200 dark:border-gray-600 hidden sm:flex">
             <!-- Logo y Título -->
             <div class="flex items-center px-4 h-[73.5px] border-b border-gray-200 dark:border-gray-600 py-4">
-                <Link :href="route('dashboard')" class="flex items-center space-x-4">
+                <Link :href="route('dashboard.index')" class="flex items-center space-x-4">
                     <ApplicationMark class="w-12 rounded-md" />
                     <div class="flex flex-col">
                         <h1 class="text-xs font-bold text-red-800 mb-0 dark:text-red-600">Gobierno del Perú</h1>
