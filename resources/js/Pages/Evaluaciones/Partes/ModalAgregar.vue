@@ -32,7 +32,7 @@
 
             <!-- Fecha de Evaluación -->
             <FormItem label="Fecha de Evaluación" name="fecha_evaluacion" :rules="[{ required: true, message: 'Por favor seleccione la fecha de evaluación' }]">
-                <Input v-model:value="evaluacion.fecha_evaluacion" placeholder="Ingrese la fecha de evaluación (YYYY-MM-DD)" />
+                <Input type="date" v-model:value="evaluacion.fecha_evaluacion" placeholder="Ingrese la fecha de evaluación (YYYY-MM-DD)" />
             </FormItem>
 
             <!-- Botones de Acción -->

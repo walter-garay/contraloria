@@ -40,12 +40,13 @@ const emitir = defineEmits(["editar", "actualizar-tabla"]);
 // Definir las columnas de la tabla
 const columnas = [
     { title: "ID", dataIndex: "id", key: "id", width: 50 },
-    { title: "Denuncia ID", dataIndex: "denuncia_id", key: "denuncia_id" },
-    { title: "Evaluador (Usuario ID)", dataIndex: "user_id", key: "user_id" },
+    { title: "Denuncia", dataIndex: "denuncia_id", key: "denuncia_id", width: 100 },
+    { title: "Evaluador", dataIndex: "user_id", key: "user_id", width: 100},
     {
         title: "Resultado",
         dataIndex: "resultado",
         key: "resultado",
+        width: 200,
         filters: [
             { text: "Desestimado", value: "Desestimado" },
             { text: "Pasa a Control", value: "Pasa a Control" },
@@ -54,7 +55,7 @@ const columnas = [
         scopedSlots: { customRender: "resultado" },
     },
     { title: "Observaciones", dataIndex: "observaciones", key: "observaciones" },
-    { title: "Fecha de Evaluación", dataIndex: "fecha_evaluacion", key: "fecha_evaluacion" },
+    { title: "Fecha de Evaluación", dataIndex: "fecha_evaluacion", key: "fecha_evaluacion", width: 120 },
     { title: "Acciones", key: "acciones", fixed: "right", width: 100 },
 ];
 

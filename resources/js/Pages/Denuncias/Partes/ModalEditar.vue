@@ -35,9 +35,9 @@
             <!-- Tipo de Hecho -->
             <FormItem label="Tipo de Hecho" name="tipo_de_hecho" :rules="[{ required: true, message: 'Por favor seleccione un tipo de hecho' }]">
                 <Select v-model:value="denuncia.tipo_de_hecho" placeholder="Seleccione un tipo de hecho">
-                    <Option v-for="opcion in opcionesTipoHecho" :key="opcion" :value="opcion">
+                    <Select.Option v-for="opcion in opcionesTipoHecho" :key="opcion" :value="opcion">
                         {{ opcion }}
-                    </Option>
+                    </Select.Option>
                 </Select>
             </FormItem>
 
@@ -72,7 +72,7 @@
 
 <script setup>
 import { ref, watch, defineProps, defineEmits } from 'vue';
-import { Modal, Form, FormItem, Input, Button, Select, Option, message } from 'ant-design-vue';
+import { Modal, Form, FormItem, Input, Button, Select, message } from 'ant-design-vue'; // Eliminado 'Option'
 import axios from 'axios';
 
 const props = defineProps({

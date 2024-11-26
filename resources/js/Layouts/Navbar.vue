@@ -26,7 +26,7 @@ const logout = () => {
 const navigationLinks = [
     { name: 'Dashboard', route: 'dashboard.index', icon: TeamOutlined },
     { name: 'Denuncias', route: 'denuncias.index', icon: AppstoreOutlined },
-    { name: 'Evaluaciones', route: 'usuarios.index', icon: SolutionOutlined },
+    { name: 'Evaluaciones', route: 'evaluaciones.index', icon: SolutionOutlined },
     { name: 'Usuarios', route: 'usuarios.index', icon: TeamOutlined },
 ];
 </script>
